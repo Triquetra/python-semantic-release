@@ -712,7 +712,6 @@ def version(  # noqa: C901
         hvcs_client,
         release_history.released[new_version],
         runtime.template_dir,
-        history=release_history,
     )
 
     exception: Exception | None = None

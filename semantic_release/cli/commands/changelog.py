@@ -115,7 +115,6 @@ def changelog(cli_ctx: CliContextObj, release_tag: str | None) -> None:
         hvcs_client,
         release,
         runtime.template_dir,
-        release_history,
     )
 
     try:
