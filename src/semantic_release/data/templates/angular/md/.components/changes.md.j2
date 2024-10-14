@@ -1,23 +1,23 @@
 {%    from 'macros.md.j2' import apply_alphabetical_ordering_by_brk_descriptions
 %}{%  from 'macros.md.j2' import apply_alphabetical_ordering_by_descriptions
-%}{%  from 'macros.md.j2' import format_breaking_changes_description, format_commit_summary_line
-%}{%  from 'macros.md.j2' import section_heading_order
+%}{%  from 'macros.md.j2' import emoji_map, format_breaking_changes_description
+%}{%  from 'macros.md.j2' import format_commit_summary_line, section_heading_order
 %}{#
 EXAMPLE:
 
-### Features
+### ✨ Features
 
 - Add new feature ([#10](https://domain.com/namespace/repo/pull/10),
   [`abcdef0`](https://domain.com/namespace/repo/commit/HASH))
 
 - **scope**: Add new feature ([`abcdef0`](https://domain.com/namespace/repo/commit/HASH))
 
-### Bug Fixes
+### 🪲 Bug Fixes
 
 - Fix bug ([#11](https://domain.com/namespace/repo/pull/11),
   [`abcdef1`](https://domain.com/namespace/repo/commit/HASH))
 
-### BREAKING CHANGES
+### 💥 BREAKING CHANGES
 
 - With the change _____, the change causes ___ effect. Ultimately, this section
   it is a more detailed description of the breaking change. With an optional
@@ -53,7 +53,7 @@ EXAMPLE:
 %}{#
    #    # PRINT SECTION (header & commits)
 #}{{    "\n"
-}}{{    "### %s\n" | format(type_ | title)
+}}{{    "### %s %s\n" | format(emoji_map[type_], type_ | title)
 }}{{    "\n"
 }}{{    "%s\n" | format(commit_descriptions | unique | join("\n\n"))
 }}{%  endfor
@@ -87,7 +87,7 @@ EXAMPLE:
 %}{#
    #    # PRINT BREAKING CHANGE DESCRIPTIONS (header & descriptions)
 #}{{    "\n"
-}}{{    "### BREAKING CHANGES\n"
+}}{{    "### %s BREAKING CHANGES\n" | format(emoji_map["breaking"])
 }}{{
         "\n%s\n" | format(brking_descriptions | unique | join("\n\n"))
 }}{#

@@ -1,3 +1,18 @@
+{% set emoji_map = {
+    'breaking': '💥',
+    'features': '✨',
+    'bug fixes': '🪲',
+    'performance improvements': '⚡',
+    'documentation': '📖',
+    'build system': '⚙️',
+    'refactoring': '♻️',
+    'testing': '✅',
+    'continuous integration': '🤖',
+    'chores': '🧹',
+    'code style': '🎨',
+    'unknown': '❗',
+} %}
+
 
 {% set section_heading_order = [
     'features',
@@ -10,8 +25,7 @@
     'continuous integration',
     'chores',
     'code style',
-  ]
-%}
+] %}
 
 
 {#
