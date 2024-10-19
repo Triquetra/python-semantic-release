@@ -1,24 +1,25 @@
 {%   from 'macros.rst.j2' import apply_alphabetical_ordering_by_brk_descriptions
 %}{% from 'macros.rst.j2' import apply_alphabetical_ordering_by_descriptions
-%}{% from 'macros.rst.j2' import extract_pr_link_reference, format_breaking_changes_description
-%}{% from 'macros.rst.j2' import format_commit_summary_line, format_link_reference
-%}{% from 'macros.rst.j2' import generate_heading_underline, section_heading_order
+%}{% from 'macros.rst.j2' import emoji_map, extract_pr_link_reference
+%}{% from 'macros.rst.j2' import format_breaking_changes_description, format_commit_summary_line
+%}{% from 'macros.rst.j2' import format_link_reference, generate_heading_underline
+%}{% from 'macros.rst.j2' import section_heading_order
 %}{#
 
-Features
---------
+✨ Features
+-----------
 
 * Add new feature (`#10`_, `8a7b8ec`_)
 
 * **scope**: Add another feature (`abcdef0`_)
 
-Bug Fixes
----------
+🪲 Bug Fixes
+------------
 
 * Fix bug (`#11`_, `8a7b8ec`_)
 
-BREAKING CHANGES
-----------------
+💥 BREAKING CHANGES
+-------------------
 
 * With the change _____, the change causes ___ effect. Ultimately, this section
   it is a more detailed description of the breaking change. With an optional
@@ -27,10 +28,10 @@ BREAKING CHANGES
 * **scope**: this breaking change has a scope to identify the part of the code that
   this breaking change applies to for better context.
 
-.. _10: https://domain.com/namespace/repo/pull/10
+.. _#10: https://domain.com/namespace/repo/pull/10
+.. _#11: https://domain.com/namespace/repo/pull/11
 .. _8a7B8ec: https://domain.com/owner/repo/commit/8a7b8ec
 .. _abcdef0: https://domain.com/owner/repo/commit/abcdef0
-.. _11: https://domain.com/namespace/repo/pull/11
 
 #}{%  set max_line_width = max_line_width | default(100)
 %}{%  set hanging_indent = hanging_indent | default(2)
@@ -39,7 +40,7 @@ BREAKING CHANGES
 %}{#
 #}{%  for type_ in section_heading_order if type_ in commit_objects
 %}{#    # PREPARE SECTION HEADER
-#}{%    set section_header = "%s" | format(type_ | title)
+#}{%    set section_header = "%s %s" | format(emoji_map[type_], type_ | title)
 %}{#
    #    # PREPROCESS COMMITS
 #}{%    set ns = namespace(commits=commit_objects[type_])
@@ -78,9 +79,11 @@ BREAKING CHANGES
 }}{%    endfor
 %}{#
    #    # PRINT SECTION (Header & Commits)
+   #    # Note: Must add an additional character to the section header when determining
+   #    # the underline because of the emoji character which can serve as 2 characters in length.
 #}{{    "\n"
 }}{{    section_header ~ "\n"
-}}{{    generate_heading_underline(section_header, '-') ~ "\n"
+}}{{    generate_heading_underline(section_header ~ " ", '-') ~ "\n"
 }}{{
         "\n%s\n" | format(commit_descriptions | unique | join("\n\n"))
 
@@ -115,8 +118,8 @@ BREAKING CHANGES
 %}{#
    #    # PRINT BREAKING CHANGE DESCRIPTIONS (header & descriptions)
 #}{{    "\n"
-}}{{    "BREAKING CHANGES\n"
-}}{{    '----------------\n'
+}}{{    "%s BREAKING CHANGES\n" | format(emoji_map["breaking"])
+}}{{    '-------------------\n'
 }}{{
         "\n%s\n" | format(brking_descriptions | unique | join("\n\n"))
 }}{#
