@@ -58,7 +58,7 @@ if TYPE_CHECKING:
 
     from typing_extensions import NotRequired
 
-    from semantic_release.hvcs import HvcsBase
+    from semantic_release.hvcs import RvcsInterface
 
     from tests.conftest import (
         BuildRepoOrCopyCacheFn,
@@ -127,7 +127,7 @@ if TYPE_CHECKING:
             tag_format_str: str | None = None,
             extra_configs: dict[str, TomlSerializableTypes] | None = None,
             mask_initial_release: bool = True,  # Default as of v10
-        ) -> tuple[Path, HvcsBase]: ...
+        ) -> tuple[Path, RvcsInterface]: ...
 
     class CommitNReturnChangelogEntryFn(Protocol):
         def __call__(self, git_repo: Repo, commit_def: CommitDef) -> CommitDef: ...
@@ -1001,7 +1001,7 @@ def build_configured_base_repo(  # noqa: C901
         tag_format_str: str | None = None,
         extra_configs: dict[str, TomlSerializableTypes] | None = None,
         mask_initial_release: bool = True,  # Default as of v10
-    ) -> tuple[Path, HvcsBase]:
+    ) -> tuple[Path, RvcsInterface]:
         if not cached_example_git_project.exists():
             raise RuntimeError("Unable to find cached git project files!")
 
